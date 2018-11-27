@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: CustodianExport::Reporter::ReportFile
+  
+    &mdash; Documentation by YARD 0.9.16
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "CustodianExport::Reporter::ReportFile";
+  relpath = '../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../_index.html">Index (R)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../CustodianExport.html" title="CustodianExport (class)">CustodianExport</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Reporter.html" title="CustodianExport::Reporter (class)">Reporter</a></span></span>
+     &raquo; 
+    <span class="title">ReportFile</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: CustodianExport::Reporter::ReportFile
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">CustodianExport::Reporter::ReportFile</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>Ruby/CustodianExport.nuixscript/custodian_export.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Class for parsing summary-report.xml files.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Get ExportConfiguration</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='const'>ReportFile</span><span class='period'>.</span><span class='id identifier rubyid_configuration'><span class='object_link'><a href="#configuration-instance_method" title="CustodianExport::Reporter::ReportFile#configuration (method)">configuration</a></span></span> <span class='comment'>#=&gt; Nuix/Export/ExportConfiguration</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Get Custodian Details</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='const'>ReportFile</span><span class='period'>.</span><span class='id identifier rubyid_details'><span class='object_link'><a href="#details-instance_method" title="CustodianExport::Reporter::ReportFile#details (method)">details</a></span></span> <span class='comment'>#=&gt; Hash for CustodianDetails</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Get exportDuration</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='const'>ReportFile</span><span class='period'>.</span><span class='id identifier rubyid_duration'><span class='object_link'><a href="#duration-instance_method" title="CustodianExport::Reporter::ReportFile#duration (method)">duration</a></span></span> <span class='comment'>#=&gt; Nuix/Export[exportDuration]</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Get Statistics Hash</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='const'>ReportFile</span><span class='period'>.</span><span class='id identifier rubyid_statistics'><span class='object_link'><a href="#statistics-instance_method" title="CustodianExport::Reporter::ReportFile#statistics (method)">statistics</a></span></span><span class='lbracket'>[</span><span class='symbol'>:export</span><span class='rbracket'>]</span> <span class='comment'>#=&gt; Nuix/Export/ExportStatistics
+</span><span class='const'>ReportFile</span><span class='period'>.</span><span class='id identifier rubyid_statistics'><span class='object_link'><a href="#statistics-instance_method" title="CustodianExport::Reporter::ReportFile#statistics (method)">statistics</a></span></span><span class='lbracket'>[</span><span class='symbol'>:file</span><span class='rbracket'>]</span> <span class='comment'>#=&gt; Nuix/Export/FileStatistics
+</span><span class='const'>ReportFile</span><span class='period'>.</span><span class='id identifier rubyid_statistics'><span class='object_link'><a href="#statistics-instance_method" title="CustodianExport::Reporter::ReportFile#statistics (method)">statistics</a></span></span><span class='lbracket'>[</span><span class='symbol'>:mime</span><span class='rbracket'>]</span> <span class='comment'>#=&gt; Nuix/Export/MimeTypeStatistics/MimeTypes</span></code></pre>
+    
+  </div>
+
+
+</div>
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#duration-instance_method" title="#duration (instance method)">#<strong>duration</strong>  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>ExportDuration.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#statistics-instance_method" title="#statistics (instance method)">#<strong>statistics</strong>  &#x21d2; Hash{ :export =&gt; ExportStatistics, :file =&gt; FileStatistics, :mime =&gt; MimeTypeStatistics/MimeTypes } </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#configuration-instance_method" title="#configuration (instance method)">#<strong>configuration</strong>  &#x21d2; REXML::Element </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>ExportConfiguration XML.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#details-instance_method" title="#details (instance method)">#<strong>details</strong>  &#x21d2; Hash </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Creates Hash of details for CustodianDetails.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="protected ">
+  <span class="summary_signature">
+    
+      <a href="#export_statistics-instance_method" title="#export_statistics (instance method)">#<strong>export_statistics</strong>  &#x21d2; Hash </a>
+    
+
+    
+  </span>
+  
+  
+  
+  <span class="note title protected">protected</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>ExportStatistics information from XML.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="protected ">
+  <span class="summary_signature">
+    
+      <a href="#file_statistics-instance_method" title="#file_statistics (instance method)">#<strong>file_statistics</strong>  &#x21d2; Hash </a>
+    
+
+    
+  </span>
+  
+  
+  
+  <span class="note title protected">protected</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>FileStatistics information from XML.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(file_path)  &#x21d2; ReportFile </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Loads summary-report.xml file to parse.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="protected ">
+  <span class="summary_signature">
+    
+      <a href="#mimes-instance_method" title="#mimes (instance method)">#<strong>mimes</strong>  &#x21d2; Hash </a>
+    
+
+    
+  </span>
+  
+  
+  
+  <span class="note title protected">protected</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Creates Hash of MimeTypes counts from XML.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(file_path)  &#x21d2; <tt><span class='object_link'><a href="" title="CustodianExport::Reporter::ReportFile (class)">ReportFile</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Loads summary-report.xml file to parse.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>file_path</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>path to a summary-report.xml</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'Ruby/CustodianExport.nuixscript/custodian_export.rb', line 414</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_file_path'>file_path</span><span class='rparen'>)</span>
+  <span class='ivar'>@custodian</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_dirname'>dirname</span><span class='lparen'>(</span><span class='id identifier rubyid_file_path'>file_path</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_doc'>doc</span> <span class='op'>=</span> <span class='const'>REXML</span><span class='op'>::</span><span class='const'>Document</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>IO</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_file_path'>file_path</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='ivar'>@export_doc</span> <span class='op'>=</span> <span class='id identifier rubyid_doc'>doc</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Nuix/Export</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+  <span class='ivar'>@duration</span> <span class='op'>=</span> <span class='ivar'>@export_doc</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>exportDuration</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+  <span class='ivar'>@statistics</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='ivar'>@statistics</span><span class='lbracket'>[</span><span class='symbol'>:export</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_export_statistics'>export_statistics</span>
+  <span class='ivar'>@statistics</span><span class='lbracket'>[</span><span class='symbol'>:file</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_file_statistics'>file_statistics</span>
+  <span class='ivar'>@statistics</span><span class='lbracket'>[</span><span class='symbol'>:mime</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_mimes'>mimes</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="duration-instance_method">
+  
+    #<strong>duration</strong>  &#x21d2; <tt>Integer</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns exportDuration</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>exportDuration</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+404
+405
+406</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'Ruby/CustodianExport.nuixscript/custodian_export.rb', line 404</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_duration'>duration</span>
+  <span class='ivar'>@duration</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="statistics-instance_method">
+  
+    #<strong>statistics</strong>  &#x21d2; <tt>Hash{
+:export =&gt; ExportStatistics,
+:file =&gt; FileStatistics,
+:mime =&gt; MimeTypeStatistics/MimeTypes }</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash{
+:export =&gt; ExportStatistics,
+:file =&gt; FileStatistics,
+:mime =&gt; MimeTypeStatistics/MimeTypes }</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+409
+410
+411</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'Ruby/CustodianExport.nuixscript/custodian_export.rb', line 409</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_statistics'>statistics</span>
+  <span class='ivar'>@statistics</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="configuration-instance_method">
+  
+    #<strong>configuration</strong>  &#x21d2; <tt>REXML::Element</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>ExportConfiguration XML.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>REXML::Element</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>ExportConfiguration XML</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+428
+429
+430</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'Ruby/CustodianExport.nuixscript/custodian_export.rb', line 428</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_configuration'>configuration</span>
+  <span class='ivar'>@export_doc</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ExportConfiguration</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="details-instance_method">
+  
+    #<strong>details</strong>  &#x21d2; <tt>Hash</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Creates Hash of details for CustodianDetails.</p>
+
+<pre class="code ruby"><code class="ruby">Includes custodian, duration, and the ExportStatistics.</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>CustodianDetails</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'Ruby/CustodianExport.nuixscript/custodian_export.rb', line 436</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_details'>details</span>
+  <span class='id identifier rubyid_d'>d</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_d'>d</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>name</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='ivar'>@custodian</span>
+  <span class='id identifier rubyid_d'>d</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>exportDuration</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='ivar'>@duration</span>
+  <span class='ivar'>@statistics</span><span class='lbracket'>[</span><span class='symbol'>:export</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
+    <span class='comment'># fix case
+</span>    <span class='id identifier rubyid_n'>n</span> <span class='op'>=</span> <span class='const'>String</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_k'>k</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_n'>n</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_n'>n</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span>
+    <span class='id identifier rubyid_d'>d</span><span class='lbracket'>[</span><span class='id identifier rubyid_n'>n</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_v'>v</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_d'>d</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="export_statistics-instance_method">
+  
+    #<strong>export_statistics</strong>  &#x21d2; <tt>Hash</tt>  <span class="extras">(protected)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>ExportStatistics information from XML.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>ExportStatistics</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+454
+455
+456
+457
+458
+459
+460
+461</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'Ruby/CustodianExport.nuixscript/custodian_export.rb', line 454</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_export_statistics'>export_statistics</span>
+  <span class='id identifier rubyid_fields'>fields</span> <span class='op'>=</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>SelectedItems</span><span class='words_sep'> </span><span class='tstring_content'>ExcludedCount</span><span class='words_sep'> </span><span class='tstring_content'>TotalItemsToExport</span><span class='words_sep'> </span><span class='tstring_content'>FailedItems</span><span class='words_sep'>]</span>
+  <span class='id identifier rubyid_stats'>stats</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
+    <span class='id identifier rubyid_stats'>stats</span><span class='lbracket'>[</span><span class='id identifier rubyid_v'>v</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='ivar'>@export_doc</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ExportStatistics/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_v'>v</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_stats'>stats</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="file_statistics-instance_method">
+  
+    #<strong>file_statistics</strong>  &#x21d2; <tt>Hash</tt>  <span class="extras">(protected)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>FileStatistics information from XML.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>FileStatistics</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+466
+467
+468
+469
+470
+471
+472
+473
+474</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'Ruby/CustodianExport.nuixscript/custodian_export.rb', line 466</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_file_statistics'>file_statistics</span>
+  <span class='id identifier rubyid_file_stats'>file_stats</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='ivar'>@export_doc</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>FileStatistics</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span>
+    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>REXML</span><span class='op'>::</span><span class='const'>Element</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_file_stats'>file_stats</span><span class='lbracket'>[</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_file_stats'>file_stats</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="mimes-instance_method">
+  
+    #<strong>mimes</strong>  &#x21d2; <tt>Hash</tt>  <span class="extras">(protected)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Creates Hash of MimeTypes counts from XML.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>MimeTypes</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+479
+480
+481
+482
+483
+484
+485
+486
+487</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'Ruby/CustodianExport.nuixscript/custodian_export.rb', line 479</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_mimes'>mimes</span>
+  <span class='id identifier rubyid_types'>types</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='ivar'>@export_doc</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>MimeTypeStatistics/MimeTypes</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span>
+    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>REXML</span><span class='op'>::</span><span class='const'>Element</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_types'>types</span><span class='lbracket'>[</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>name</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>count</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_types'>types</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Tue Nov 27 14:40:37 2018 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.16 (ruby-2.3.3).
+</div>
+
+    </div>
+  </body>
+</html>
