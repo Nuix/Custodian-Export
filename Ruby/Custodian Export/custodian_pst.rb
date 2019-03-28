@@ -35,6 +35,21 @@ class CustodianExport < NxExporter
 
   protected
 
+  # Creates top-level-MD5-digests.txt by combining per-custodian files.
+  def append_digests
+    name = 'top-level-MD5-digests.txt'
+    @@dialog.setSubStatusAndLogIt("Generating #{name}")
+    files = Dir.glob(File.join(@path[:reports], '*', name))
+    @@dialog.setSubProgress(0, files.size)
+    files.each_with_index do |file, i|
+      @@dialog.setSubProgress(i)
+      @@dialog.logMessage("Adding #{file}")
+      o = File.new(File.join(@export_dir, name), 'a')
+      o.write(File.read(file))
+      o.close
+    end
+  end
+
   # Exports items for custodian.
   #
   # @param name [String] custodian of the items
@@ -97,9 +112,10 @@ class CustodianExport < NxExporter
     @@dialog.logMessage("Moving files from #{dir}")
     # Make per-custodian directory
     FileUtils.mkdir_p(File.join(@path[:reports], File.basename(dir)))
-    Dir.glob(File.join(dir, '*.*')).each do |f|
+    ['top-level-MD5-digests.txt', 'summary-report.xml', 'summary-report.txt'].each do |r|
+      f = File.join(dir, r)
       n = f.sub(@path[:exports], @path[:reports])
-      @@dialog.logMessage("Moving #{File.basename(f)} to #{n}")
+      @@dialog.logMessage("Moving #{r} to #{n}")
       File.rename(f, n)
     end
   end
@@ -140,7 +156,7 @@ class CustodianExport < NxExporter
   # @param export_dir [String] directory for export
   def run(export_dir)
     @path.each { |k, v| @@dialog.logMessage("Writing #{k} to #{v}") }
-    @@dialog.setMainProgress(0, @total + 3)
+    @@dialog.setMainProgress(0, @total + 4)
     start = Time.now
     return false if export == false || @@dialog.abortWasRequested
 
@@ -148,7 +164,8 @@ class CustodianExport < NxExporter
     return false if @@dialog.abortWasRequested
 
     SummaryReporter.new(start, export_dir, @path[:reports], 'Custodian').write
-
+    advance_main
+    append_digests
   end
 
   # Finds the top level items from selected items.

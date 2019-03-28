@@ -123,6 +123,7 @@ class CustodianProduction < NxExporter
   #
   # @return [true, nil] if PDFs were populated, nil if not needed
   def populate
+    @@dialog.logMessage("#{@items.size} selected items")
     i = intersect_items('-has-stored:pdf')
     @@dialog.logMessage("#{i.size} selected items without stored PDF")
     return nil if i.empty?
@@ -141,6 +142,7 @@ class CustodianProduction < NxExporter
     FileUtils.mkdir_p(temp_dir)
     populator = $utilities.create_batch_exporter(temp_dir)
     populator.add_product('pdf', 'naming' => 'md5')
+    populator.set_numbering_options('createProductionSet' => false)
     populator.export_items(items)
     @@dialog.setSubStatusAndLogIt("Removing #{temp_dir}")
     FileUtils.rm_r(temp_dir)
