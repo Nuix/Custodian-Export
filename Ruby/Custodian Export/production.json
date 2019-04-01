@@ -1,0 +1,28 @@
+{
+  "load_file": "concordance",
+  "product": {
+    "type": "tiff",
+    "options": {
+      "naming": "full",
+      "path": "IMAGES"
+    }
+  },
+  "numbering": {
+    "delimiter": "",
+    "groupDocumentPages": false,
+    "groupFamilyItems": false,
+    "advancedView": false,
+    "folder": {
+      "minWidth": 6,
+      "from": 0,
+      "to": 999,
+      "startAt": 0
+    },
+    "page": {
+      "minWidth": 3,
+      "from": 0,
+      "to": 999,
+      "startAt": 1
+    }
+  }
+}
