@@ -1,12 +1,13 @@
 # Menu Title: Custodian PST Export
 # Needs Case: true
 # Needs Selected Items: true
-# @version 2.0.0
+# @version 2.0.1
 
 naming = 'item_name'
 # naming = 'item_name_with_path'
 
 load File.join(__dir__, 'nx_exporter.rb_')
+load File.join(__dir__, 'summary_reporter.rb_')
 # Class for exporting items by custodian.
 # * +@export_dir+ is the export directory
 # * +@path[:exports]+ is the exports path
@@ -24,7 +25,7 @@ class CustodianExport < NxExporter
     @export_dir = export_dir
     @path = paths(export_dir)
     @naming = naming
-    NxExporter::ProgressDialog.forBlock do |progress_dialog|
+    ProgressDialog.forBlock do |progress_dialog|
       super(progress_dialog, 'Custodian Export')
       @top_items = tops(items)
       @total = @top_items.size

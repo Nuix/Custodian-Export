@@ -1,11 +1,12 @@
 # Menu Title: Custodian Production
 # Needs Case: true
 # Needs Selected Items: true
-# @version 2.0.0
+# @version 2.0.1
 
 settings = File.join(__dir__, 'production.json')
 
 load File.join(__dir__, 'nx_exporter.rb_')
+load File.join(__dir__, 'summary_reporter.rb_')
 require 'json'
 # Class for producing items by custodian.
 # * +@export_dir+ is the export directory
@@ -23,7 +24,7 @@ class CustodianProduction < NxExporter
     @reports_dir = File.join(@export_dir, 'REPORTS')
     @items = items
     @settings = JSON.parse(File.read(settings_json))
-    NxExporter::ProgressDialog.forBlock do |progress_dialog|
+    ProgressDialog.forBlock do |progress_dialog|
       super(progress_dialog, 'Custodian Production')
       run if custodian_check
       close_nx
