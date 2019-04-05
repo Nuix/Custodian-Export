@@ -6,8 +6,9 @@
 naming = 'item_name'
 # naming = 'item_name_with_path'
 
-load File.join(__dir__, 'nx_exporter.rb_')
-load File.join(__dir__, 'summary_reporter.rb_')
+load File.join(__dir__, 'nx_exporter.rb_') # v2.1.0
+load File.join(__dir__, 'summary_reporter.rb_') # v1.0.0
+
 # Class for exporting items by custodian.
 # * +@export_dir+ is the export directory
 # * +@path[:exports]+ is the exports path

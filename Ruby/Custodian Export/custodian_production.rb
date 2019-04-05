@@ -5,9 +5,11 @@
 
 settings = File.join(__dir__, 'production.json')
 
-load File.join(__dir__, 'nx_exporter.rb_')
-load File.join(__dir__, 'summary_reporter.rb_')
+load File.join(__dir__, 'nx_exporter.rb_') # v2.1.0
+load File.join(__dir__, 'summary_reporter.rb_') # v1.0.0
+
 require 'json'
+
 # Class for producing items by custodian.
 # * +@export_dir+ is the export directory
 # * +@reports_dir+ is the reports path
