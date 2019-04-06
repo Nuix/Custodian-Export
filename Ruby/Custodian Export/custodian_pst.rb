@@ -1,13 +1,15 @@
 # Menu Title: Custodian PST Export
 # Needs Case: true
 # Needs Selected Items: true
-# @version 2.0.1
+# @version 2.0.0
 
 naming = 'item_name'
 # naming = 'item_name_with_path'
 
-load File.join(__dir__, 'nx_exporter.rb_') # v2.1.0
+load File.join(__dir__, 'nx_progress.rb_') # v1.0.0
 load File.join(__dir__, 'summary_reporter.rb_') # v1.0.0
+
+require 'fileutils'
 
 # Class for exporting items by custodian.
 # * +@export_dir+ is the export directory
@@ -16,7 +18,7 @@ load File.join(__dir__, 'summary_reporter.rb_') # v1.0.0
 # * +@naming+ is the naming property for the export product
 # * +@top_items+ are the top level items that will be exported
 # * +@total+ is @top_items.size
-class CustodianExport < NxExporter
+class CustodianExport < NxProgress
   # Exports items by custodian and creates summary report.
   #
   # @param export_dir [String] path for exports

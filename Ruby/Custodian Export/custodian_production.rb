@@ -1,21 +1,22 @@
 # Menu Title: Custodian Production
 # Needs Case: true
 # Needs Selected Items: true
-# @version 2.0.1
+# @version 2.0.0
 
 settings = File.join(__dir__, 'production.json')
 
-load File.join(__dir__, 'nx_exporter.rb_') # v2.1.0
+load File.join(__dir__, 'nx_progress.rb_') # v1.0.0
 load File.join(__dir__, 'summary_reporter.rb_') # v1.0.0
 
 require 'json'
+require 'fileutils'
 
 # Class for producing items by custodian.
 # * +@export_dir+ is the export directory
 # * +@reports_dir+ is the reports path
 # * +@items+ are the selected items
 # * +@settings+ is loaded from JSON file
-class CustodianProduction < NxExporter
+class CustodianProduction < NxProgress
   # Produces items by custodian and creates summary report.
   #
   # @param export_dir [String] path for exports
@@ -227,6 +228,6 @@ def choose_export_dir
 end
 
 begin
-  dir = choose_export_dir
+  d = choose_export_dir
   CustodianProduction.new(d, $current_selected_items, settings) unless d.nil?
 end

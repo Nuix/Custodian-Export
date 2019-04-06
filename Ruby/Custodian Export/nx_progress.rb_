@@ -1,5 +1,5 @@
-# Base class for exporting items with Nx.
-# @version 2.1.0
+# Base class for shared Nx progress dialog
+# @version 1.0.0
 
 begin # Nx Bootstrap
   require File.join(__dir__, 'Nx.jar')
@@ -16,13 +16,11 @@ begin # Nx Bootstrap
   NuixConnection.setUtilities($utilities)
   NuixConnection.setCurrentNuixVersion(NUIX_VERSION)
 end
-require 'fileutils'
-require 'rexml/document'
 
 # Class for Nx Dialog.
 # * +@@dialog+ is an Nx ProcessDialog
 # * +@@progress+ represents the main progress
-class NxExporter
+class NxProgress
   # Initializes Progress Dialog.
   #
   # @param progress_dialog [ProgressDialog] the progress dialog

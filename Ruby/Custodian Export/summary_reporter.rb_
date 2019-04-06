@@ -1,6 +1,8 @@
 # Class for handling summary-report.xml files
 # @version 1.0.0
-class SummaryReporter < NxExporter
+class SummaryReporter < NxProgress
+  require 'rexml/document'
+
   # Initializes summary report and summarizes.
   #
   # @param start_time [Time]  start time of export
