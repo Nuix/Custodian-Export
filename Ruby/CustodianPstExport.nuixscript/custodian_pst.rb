@@ -1,20 +1,20 @@
 # Menu Title: Custodian PST Export
 # Needs Case: true
 # Needs Selected Items: true
-# @version 2.0.0
+# @version 2.1.0
 
 naming = 'item_name'
 # naming = 'item_name_with_path'
 
-load File.join(__dir__, 'nx_progress.rb_') # v1.0.0
-load File.join(__dir__, 'summary_reporter.rb_') # v1.0.0
+load File.join(__dir__, 'nx_progress.rb') # v1.0.0
+load File.join(__dir__, 'summary_reporter.rb') # v1.0.0
 
 require 'fileutils'
 
 # Class for exporting items by custodian.
 # * +@export_dir+ is the export directory
-# * +@path[:exports]+ is the exports path
-# * +@path[:reports]+ is the reports path
+# * +@items_dir+ is the export items directory
+# * +@reports_dir+ is the reports directory
 # * +@naming+ is the naming property for the export product
 # * +@top_items+ are the top level items that will be exported
 # * +@total+ is @top_items.size
@@ -26,14 +26,14 @@ class CustodianExport < NxProgress
   # @param naming [String] naming scheme for export product
   def initialize(export_dir, items, naming)
     @export_dir = export_dir
-    @path = paths(export_dir)
+    @items_dir = 'Items'
+    @reports_dir = 'Reports'
     @naming = naming
     ProgressDialog.forBlock do |progress_dialog|
       super(progress_dialog, 'Custodian Export')
       @top_items = tops(items)
       @total = @top_items.size
       run(export_dir) unless custodian_missing
-      close_nx
     end
   end
 
@@ -43,32 +43,26 @@ class CustodianExport < NxProgress
   def append_digests
     name = 'top-level-MD5-digests.txt'
     @@dialog.setSubStatusAndLogIt("Generating #{name}")
-    files = Dir.glob(File.join(@path[:reports], '*', name))
+    files = Dir.glob(report_path(File.join('*', name)))
     @@dialog.setSubProgress(0, files.size)
     files.each_with_index do |file, i|
       @@dialog.setSubProgress(i)
       @@dialog.logMessage("Adding #{file}")
-      o = File.new(File.join(@export_dir, name), 'a')
+      o = File.new(export_path(name), 'a')
       o.write(File.read(file))
       o.close
     end
   end
 
-  # Exports items for custodian.
+  # Creates BatchExporter with product and numbering options.
   #
-  # @param name [String] custodian of the items
-  # @param items [Collection<Item>] items to export
-  # @return [true, false] if all items have been exported
-  def batch_export(name, items)
-    i = items.size
-    @@dialog.setSubStatusAndLogIt("Exporting custodian: #{name} (#{i} items)")
-    export_options = { naming: @naming, mailFormat: 'pst' }
-    path = File.join(@path[:exports], name)
-    exporter = $utilities.create_batch_exporter(path)
+  # @return [BatchExporter]
+  def create_exporter(name)
+    export_options = { naming: @naming, mailFormat: 'pst', path: name }
+    exporter = $utilities.create_batch_exporter(export_path(nil))
     exporter.add_product('native', export_options)
     exporter.set_numbering_options(createProductionSet: false)
-    exporter.export_items(items)
-    progress_check(i)
+    exporter
   end
 
   # Checks if +@top_items+ all have a custodian.
@@ -86,15 +80,60 @@ class CustodianExport < NxProgress
   end
 
   # Exports items.
+  #
+  # @return [true] once all items have been exported
+  # @return [nil] if abort was requested
   def export
-    @@dialog.setMainStatusAndLogIt("Exporting to #{@path[:exports]}")
+    @@dialog.setMainStatusAndLogIt("Exporting to #{@export_dir}")
     custodians = $current_case.get_all_custodians
     @@dialog.setSubProgress(0, custodians.size)
     custodians.each_with_index do |c, index|
       @@dialog.setSubProgress(index)
-      items = intersect_top("custodian:\"#{c}\"")
-      next if items.empty?
-      break if @@dialog.abortWasRequested || batch_export(c, items)
+      return true if export_custodian(c)
+      return nil if @@dialog.abortWasRequested
+    end
+  end
+
+  # Exports items for custodian.
+  #
+  # @param name [String] custodian of the items
+  # @return [true, false] if all items have been exported
+  def export_custodian(name)
+    items = intersect_top("custodian:\"#{name}\"")
+    return nil if items.empty?
+
+    i = items.size
+    @@dialog.setSubStatusAndLogIt("Exporting custodian: #{name} (#{i} items)")
+    create_exporter(name).export_items(items)
+    export_rename(name)
+    progress_check(i)
+  end
+
+  # Returns a path inside is export items directory.
+  #
+  # @param name [String, nil] the string to add, or nil to return the base path
+  # @return [String] the path for the export items
+  def export_path(name)
+    return File.join(@export_dir, @items_dir) if name.nil?
+
+    File.join(@export_dir, @items_dir, name)
+  end
+
+  # Renames files from custodian export.
+  #  Moves files if they aren't a PST.
+  #  Moves/renames PST (and deletes folder if it's now empty).
+  #
+  # @param custodian [String]
+  def export_rename(custodian)
+    @@dialog.logMessage('Renaming files')
+    dir = report_path(custodian)
+    FileUtils.mkdir_p(dir)
+    Dir.glob(export_path('*')).each do |p|
+      if File.file?(p)
+        rename_file(p, File.join(dir, File.basename(p))) unless p.end_with?('.pst')
+      elsif @naming == 'item_name'
+        rename_psts(p, custodian)
+      end
     end
   end
 
@@ -108,42 +147,6 @@ class CustodianExport < NxProgress
     $utilities.get_item_utility.intersection(@top_items, items)
   end
 
-  # Moves files to reports directory.
-  # Creates custodian directory and logs messages.
-  #
-  # @param dir [String] directory containg files to move
-  def move(dir)
-    @@dialog.logMessage("Moving files from #{dir}")
-    # Make per-custodian directory
-    FileUtils.mkdir_p(File.join(@path[:reports], File.basename(dir)))
-    ['top-level-MD5-digests.txt', 'summary-report.xml', 'summary-report.txt'].each do |r|
-      f = File.join(dir, r)
-      n = f.sub(@path[:exports], @path[:reports])
-      @@dialog.logMessage("Moving #{r} to #{n}")
-      File.rename(f, n)
-    end
-  end
-
-  # Moves reports.
-  def move_reports
-    @@dialog.setMainStatusAndLogIt('Preparing summary report')
-    @@dialog.setSubStatusAndLogIt("Moving reports to #{@path[:reports]}")
-    to_move = Dir.glob(File.join(@path[:exports], '*', File::SEPARATOR))
-    @@dialog.setSubProgress(0, to_move.size)
-    to_move.each_with_index do |dir, i|
-      move(dir)
-      @@dialog.setSubProgress(i)
-
-      break if @@dialog.abortWasRequested
-    end
-    advance_main
-  end
-
-  def paths(export_dir)
-    { exports: File.join(export_dir, 'Export'),
-      reports: File.join(export_dir, 'Reports') }
-  end
-
   # Advances progress, outputs, and returns true when completed.
   #
   # @param count [Integer] number of items to advance
@@ -155,21 +158,49 @@ class CustodianExport < NxProgress
     @@progress == @total
   end
 
+  # Renames file.
+  #
+  # @param old [String] initial file
+  # @param new [String] destination
+  def rename_file(old, new)
+    @@dialog.logMessage("Creating #{new}")
+    File.rename(old, new)
+  end
+
+  # Renames exported PSTs to the custodian name.
+  #
+  # @param dir [String] the path containing export PST
+  # @param custodian [String]
+  def rename_psts(dir, custodian)
+    # Handle multiple PSTs
+    Dir.glob(File.join(dir, 'Export*.pst')).each do |pst|
+      rename_file(pst, export_path(File.basename(pst).sub('Export', custodian)))
+    end
+    # Remove directory if now empty
+    FileUtils.remove_dir(dir) if Dir.glob(File.join(dir, '*')).empty?
+  end
+
+  # Returns a path inside is reports directory.
+  #
+  # @param name [String, nil] the string to add, or nil to return the base path
+  # @return [String] the report path
+  def report_path(name)
+    return File.join(@export_dir, @reports_dir) if name.nil?
+
+    File.join(@export_dir, @reports_dir, name)
+  end
+
   # Exports items per-custodian, then moves and summarizes reports.
   #
   # @param export_dir [String] directory for export
   def run(export_dir)
-    @path.each { |k, v| @@dialog.logMessage("Writing #{k} to #{v}") }
     @@dialog.setMainProgress(0, @total + 4)
     start = Time.now
-    return false if export == false || @@dialog.abortWasRequested
-
-    move_reports
-    return false if @@dialog.abortWasRequested
-
-    SummaryReporter.new(start, export_dir, @path[:reports], 'Custodian').write
+    export
+    SummaryReporter.new(start, export_dir, report_path(nil), 'Custodian').write
     advance_main
     append_digests
+    close_nx unless @@dialog.abortWasRequested
   end
 
   # Finds the top level items from selected items.
