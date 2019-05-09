@@ -1,7 +1,7 @@
 # Menu Title: Custodian PST Export
 # Needs Case: true
 # Needs Selected Items: true
-# @version 2.1.0
+# @version 2.1.1
 
 naming = 'item_name'
 # naming = 'item_name_with_path'
@@ -41,14 +41,13 @@ class CustodianExport < NxProgress
 
   # Creates top-level-MD5-digests.txt by combining per-custodian files.
   def append_digests
-    name = 'top-level-MD5-digests.txt'
-    @@dialog.setSubStatusAndLogIt("Generating #{name}")
-    files = Dir.glob(report_path(File.join('*', name)))
+    @@dialog.setSubStatusAndLogIt('Generating top-level-MD5-digests.txt')
+    files = Dir.glob(report_path(File.join('*', 'top-level-MD5-digests.txt')))
     @@dialog.setSubProgress(0, files.size)
     files.each_with_index do |file, i|
       @@dialog.setSubProgress(i)
       @@dialog.logMessage("Adding #{file}")
-      o = File.new(export_path(name), 'a')
+      o = File.new(File.join(@export_dir, 'top-level-MD5-digests.txt'), 'a')
       o.write(File.read(file))
       o.close
     end
