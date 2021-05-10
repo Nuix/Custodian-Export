@@ -84,11 +84,16 @@ class SummaryReporter < NxProgress
   # @param file_path [String] path to a summary-report.xml file
   def summarize_file(file_path)
     @@dialog.logMessage("Reading #{file_path}")
-    r = ReportFile.new(file_path)
-    @total_duration += r.duration
-    @configuration = r.configuration if @configuration.nil?
-    @exports << r.details
-    r.statistics.each { |t, v| @stats[t].merge!(v) { |_k, v1, v2| v1 + v2 } }
+    begin
+      r = ReportFile.new(file_path)
+    rescue
+      @@dialog.logMessage("Error loading #{file_path}. Is it XML?")
+    else
+      @total_duration += r.duration
+      @configuration = r.configuration if @configuration.nil?
+      @exports << r.details
+      r.statistics.each { |t, v| @stats[t].merge!(v) { |_k, v1, v2| v1 + v2 } }
+    end
   end
 
   # Generates summary report XML document.
