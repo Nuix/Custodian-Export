@@ -1,5 +1,5 @@
 # Class for handling summary-report.xml files
-# @version 1.0.0
+# @version 1.0.1
 class SummaryReporter < NxProgress
   require 'rexml/document'
 
@@ -87,7 +87,7 @@ class SummaryReporter < NxProgress
     begin
       r = ReportFile.new(file_path)
     rescue
-      @@dialog.logMessage("Error loading #{file_path}. Is it XML?")
+      @@dialog.logMessage("ERROR loading #{file_path}. Is it XML?")
     else
       @total_duration += r.duration
       @configuration = r.configuration if @configuration.nil?
@@ -132,7 +132,12 @@ class SummaryReporter < NxProgress
   def xml_export
     e = REXML::Element.new 'Export'
     e.add_attributes(export_attributes)
-    export_elements.each { |xml| e << xml }
+    begin
+      export_elements.each { |xml| e << xml }
+    rescue
+      e.add_element('ERROR')
+      @@dialog.logMessage('ERROR generating summary-report.xml')
+    end
     e
   end
 
