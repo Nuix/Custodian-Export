@@ -1,7 +1,7 @@
 Custodian Export
 ==============
 
-![Last tested in Nuix 7.8](https://img.shields.io/badge/Nuix-7.8-green.svg)
+![Last tested in Nuix 9.0](https://img.shields.io/badge/Nuix-9.0-green.svg)
 
 View the GitHub project [here](https://github.com/Nuix/Custodian-Export) or download the latest release [here](https://github.com/Nuix/Custodian-Export/releases).
 
