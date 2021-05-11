@@ -134,8 +134,8 @@ class SummaryReporter < NxProgress
     e.add_attributes(export_attributes)
     begin
       export_elements.each { |xml| e << xml }
-    rescue
-      e.add_element('ERROR')
+    rescue => error
+      e.add_element("ERROR: #{error.message}")
       @@dialog.logMessage('ERROR generating summary-report.xml')
     end
     e
