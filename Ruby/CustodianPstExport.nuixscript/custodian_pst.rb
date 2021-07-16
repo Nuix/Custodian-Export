@@ -1,7 +1,7 @@
 # Menu Title: Custodian PST Export
 # Needs Case: true
 # Needs Selected Items: true
-# @version 2.1.1
+# @version 2.1.2
 
 naming = 'item_name'
 # naming = 'item_name_with_path'
@@ -60,7 +60,7 @@ class CustodianExport < NxProgress
     export_options = { naming: @naming, mailFormat: 'pst', path: name }
     exporter = $utilities.create_batch_exporter(export_path(nil))
     exporter.add_product('native', export_options)
-    exporter.set_numbering_options(createProductionSet: false)
+    exporter.set_numbering_options(createProductionSet: false) if $utilities.get_license.has_feature('PRODUCTION_SET')
     exporter
   end
 
