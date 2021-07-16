@@ -60,7 +60,7 @@ class CustodianExport < NxProgress
     export_options = { naming: @naming, mailFormat: 'pst', path: name }
     exporter = $utilities.create_batch_exporter(export_path(nil))
     exporter.add_product('native', export_options)
-    exporter.set_numbering_options(createProductionSet: false) if $utilities.get_license.has_feature('PRODUCTION_SET')
+    exporter.set_numbering_options(createProductionSet: false) if $utilities.get_licence.has_feature('PRODUCTION_SET')
     exporter
   end
 
